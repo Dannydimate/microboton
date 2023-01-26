@@ -1,7 +1,0 @@
-stage ('Scan and Build Jar File') {
-            steps {
-               withSonarQubeEnv(SonarQube: 'Production SonarQubeScanner', jenkins-sonar: 'SonarQubeToken') {
-                sh 'gradle clean package sonar:sonar'
-                }
-            }
-        }
