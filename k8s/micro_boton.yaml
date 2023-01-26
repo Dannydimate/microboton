@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-boton-deployment
+  namespace: micros
+spec:
+  selector:
+    matchLabels:
+      app: micro-boton
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: micro-boton
+    spec:
+      containers:
+        - name: micro-boton
+          image: micro-boton:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: servicio-boton-clusterip
+  namespace: micros
+spec:
+  ports:
+    - protocol: "TCP"
+      port: 8080        # The port inside the cluster
+      targetPort: 8080  # The port exposed by the service
+  type: NodePort        # Type of service
+  selector:
+    app: micro-boton
