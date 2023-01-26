@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: boton-ingress
+  namespace: micros
+spec:
+  tls:
+  - hosts:
+      - microsd.com
+    secretName: my-micros-certs      
+  rules:   
+    - host: microsd.com
+      http:   
+        paths:   
+          - path: /rest 
+            pathType: Prefix   
+            backend:   
+              service:   
+                name: servicio-hola-clusterip   
+                port:   
+                  number: 8080
+          - path: /image   
+            pathType: Prefix   
+            backend:   
+              service:   
+                name: servicio-imagen-clusterip   
+                port:   
+                  number: 8080
+          - path: /boton   
+            pathType: Prefix   
+            backend:   
+              service:   
+                name: servicio-boton-clusterip   
+                port:   
+                  number: 8080                    
