@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.6'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "org.sonarqube" version "3.5.0.2730"
 }
 
 group = 'com.semillero'
@@ -10,6 +11,9 @@ sourceCompatibility = '8'
 
 repositories {
 	mavenCentral()
+	maven {
+      		url "https://plugins.gradle.org/m2/"
+    }
 }
 
 dependencies {
@@ -21,8 +25,12 @@ dependencies {
 	
 	testCompileOnly 'org.projectlombok:lombok:1.18.24'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+	
+	classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.5.0.2730"
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+apply plugin: "org.sonarqube"
