@@ -33,4 +33,14 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks.named('sonarqube').configure {
+    dependsOn test
+}
+
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'http://sonar.com'
+    }
+}
+
 apply plugin: "org.sonarqube"
