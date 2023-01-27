@@ -1,7 +1,20 @@
-stage ('Scan and Build Jar File') {
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
             steps {
-               withSonarQubeEnv(SonarQube: 'Production SonarQubeScanner', jenkins-sonar: 'SonarQubeToken') {
-                sh 'gradle clean package sonar:sonar'
-                }
+                echo 'Building..'
             }
         }
+
+
+        stage ('Scan and Build Jar File') {
+            steps {
+                withSonarQubeEnv(SonarQube: 'Production SonarQubeScanner', jenkins-sonar: 'SonarQubeToken') {
+                sh 'gradle sonar:sonar'
+            }
+        }
+    }
+    }
+}   
