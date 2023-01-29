@@ -1,27 +1,45 @@
-pipeline{
+Pipeline {
     agent any
-
-    stages{
-       stage('GetCode'){
-            steps{
+    stages {
+        stage('GetCode') {
+            steps {
                 git 'https://github.com/Dannydimate/microboton.git'
             }
-         }        
-       stage('Build'){
-            steps{
-                sh 'gradle clean package'
+        }
+        stage('Build') {
+            steps {
+                sh './gradlew assembleDebug --no-daemon'
             }
-         }
-        stage('SonarQube analysis') {
-//    def scannerHome = tool 'SonarScanner 4.0';
-        steps{
-        withSonarQubeEnv('sonarqube-8.9') { 
-        // If you have configured more than one global server connection, you can specify its name
-//      sh "${scannerHome}/bin/sonar-scanner"
-        sh "sh sonar:sonar"
+        }
+        stage('Sonar') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh './gradlew --info sonarqube --no-daemon'
+                }
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+                script {
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                    }
+                }
+            }
+        }
     }
+    post {
+        success {
+            bitbucketStatusNotify(buildState: 'SUCCESSFUL')
         }
+
+        aborted {
+            bitbucketStatusNotify(buildState: 'FAILED')
         }
-       
+
+        failure {
+            bitbucketStatusNotify(buildState: 'FAILED')
+        }
     }
 }
