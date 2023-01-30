@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        stage('Analisis SonarQube') {
+            agent
+            steps {
+                script {
+                    withSonarQubeEnv(credentialsId: 'token-sonar') {
+                        sh 'chmod +x gradlew'
+                        sh './gradlew sonarqube'
+                    }
+                }
+            }
+        }
+    }   
+}
+
