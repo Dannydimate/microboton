@@ -1,48 +1,53 @@
-pipeline {
-    agent any
-    tools {
-        gradle 'Gradle 7.5.1'
-    }
-    stages {
-        stage('Build'){
-            steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Dannydimate/microboton.git']])
-                //sh "./gradlew clean build"
-                sh './gradlew build'
-            }
-            
+podTemplate(yaml: '''
+    apiVersion: v1
+    kind: Pod
+    spec:
+      containers:
+      - name: maven
+        image: maven:3.8.1-jdk-8
+        command:
+        - sleep
+        args:
+        - 99d
+      - name: kaniko
+        image: gcr.io/kaniko-project/executor:debug
+        command:
+        - sleep
+        args:
+        - 9999999
+        volumeMounts:
+        - name: kaniko-secret
+          mountPath: /kaniko/.docker
+      restartPolicy: Never
+      volumes:
+      - name: kaniko-secret
+        secret:
+            secretName: dockercred
+            items:
+            - key: .dockerconfigjson
+              path: config.json
+''') {
+  node(POD_LABEL) {
+    stage('Get a Maven project') {
+      git url: 'https://github.com/Dannydimate/microboton.git', branch: 'main'
+      container('maven') {
+        stage('Build a Maven project') {
+          sh '''
+          echo pwd
+          '''
         }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Initialize'){
-            steps {
-                script{
-                    def dockerHome = tool 'MyDocker'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
-                }
-            }
-        }
-        stage('Build Docker Image') {
-           steps {
-               script {
-                   sh 'ls'
-                   sh 'docker build -t danny44/micro-boton:1.0 .'
-               }
-           }
-       }
-       stage ('Push Docker Image') {
-           steps {
-               script {
-                    withCredentials([string(credentialsId: 'token-sonar', variable: 'dockerhub')]) {
-                    sh 'docker login -u danny44 -p ${dockerhub}'
-                    sh 'docker push danny44/micro-boton:1.0'
-                    }
-                }
-            }
-        }
+      }
     }
 
+    stage('Build Java Image') {
+      container('kaniko') {
+        stage('Build a Go project') {
+          sh '''
+            /kaniko/executor --context `pwd` --destination danny44/micro-hola:1.0
+          '''
+        }
+      }
+    }
+
+  }
 }
