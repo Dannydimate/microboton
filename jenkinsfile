@@ -6,9 +6,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Dannydimate/microboton.git']])
                 script{
                 sh """
-                cd micro_boton
                 gradle init
                 gradle build
                """
