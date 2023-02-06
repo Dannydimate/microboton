@@ -5,7 +5,6 @@ ENTRYPOINT ["java", "-jar", "servicio/rest-1.0.jar"]
 EXPOSE 8080
 
 # Install Kubernetes CLI
-RUN apt-get update && apt-get install -y curl
 RUN curl -LO "https://dl.k8s.io/release/stable.txt"
 RUN curl -LO "https://dl.k8s.io/$(cat stable.txt)/bin/linux/amd64/kubectl"
 RUN chmod +x kubectl
