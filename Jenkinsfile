@@ -26,22 +26,19 @@ pipeline {
                 echo 'test succesfull'
             }
         }
-        stage('Build Docker Image') {
+        stage('Build,Push Docker Image') {
             steps {
                 script{
                 //sh 'gradle docker'
                 sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
                 sh 'docker build -t $DOCKER_USER/testdocker:1.0 .'
                 sh 'docker push $DOCKER_USER/testdocker:1.0'
-                echo 'succesfull'
+                echo 'image succesfull in dockerHub'
             }
             }
         }
         stage('Push Docker Image') {
-            steps {
-                //sh 'gradle dockerPush'
-                echo 'succesfull'
-                sh 'kubectl version --client'
+            steps { 
                 sh 'az login'
             }
         }
