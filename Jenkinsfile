@@ -15,6 +15,11 @@ pipeline {
             }
             }
         }
+        stage('artifact file') {
+            steps {
+                sh 'echo "artifact file" > generatedFile.txt'
+            }
+        }
         stage('test') {
             steps {
                 //sh 'gradle docker'
@@ -36,6 +41,8 @@ pipeline {
             steps {
                 //sh 'gradle dockerPush'
                 echo 'succesfull'
+                sh 'kubectl version --client'
+                sh 'az login'
             }
         }
     }
