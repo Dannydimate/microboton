@@ -39,7 +39,7 @@ pipeline {
         }
         stage('Push Docker Image') {
             steps { 
-                sh 'az login'
+                sh 'kubectl version --client --output=yaml'
             }
         }
     }
