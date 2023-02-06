@@ -30,6 +30,6 @@ spec:
     - protocol: "TCP"
       port: 8080        # The port inside the cluster
       targetPort: 8080  # The port exposed by the service
-  type: NodePort        # Type of service
+  type: ClusterIP       # Type of service
   selector:
     app: micro-boton
