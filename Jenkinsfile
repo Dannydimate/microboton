@@ -42,7 +42,7 @@ pipeline {
                 script {
                     sh 'az login'
                     sh 'cd k8s'
-                    sh 'kubectl apply -f micro-boton.yaml
+                    sh 'kubectl apply -f micro-boton.yaml'
                 }
             }
         }
