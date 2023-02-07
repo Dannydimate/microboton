@@ -41,7 +41,14 @@ pipeline {
             steps {
                 script {
                     withKubeConfig([credentialsId: 'k8s']) {
-                        sh 'kubectl version --client'
+                        sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
+                        sh 'chmod +x ./kubectl'
+                        sh 'chmod +x /usr/local/bin'
+                        sh 'mv ./kubectl /usr/local/bin'
+                        sh 'apt-get update && apt-get install -y curl apt-transport-https lsb-release gnupg'
+                        sh 'curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash'
+                        sh 'apt-get update && apt-get install -y azure-cli'
+                        sh 'curl -sL https://aka.ms/InstallAzureCLIDeb'
                     }
                 }
             }
