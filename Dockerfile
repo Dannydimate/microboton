@@ -10,9 +10,12 @@ FROM ubuntu:20.04
 RUN apt-get update && apt-get install -y curl
 
 # Install Kubernetes CLI
-RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+RUN sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 RUN chmod +x ./kubectl
-RUN mv ./kubectl /usr/local/bin/kubectl
+RUN mkdir -p ~/.local/bin
+RUN mv ./kubectl ~/.local/bin/kubectl
+RUN kubectl version --client --output=yaml
 
 # Install Azure CLI
 #RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
