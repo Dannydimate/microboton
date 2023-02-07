@@ -40,7 +40,9 @@ pipeline {
         stage('Push Docker Image a kubernetes') {
             steps {
                 script {
-                    sh 'kubectl version --client'
+                    sh 'az login'
+                    sh 'cd k8s'
+                    sh 'kubectl apply -f micro-boton.yaml
                 }
             }
         }
