@@ -40,6 +40,7 @@ pipeline {
         stage('Push Docker Image a kubernetes') {
             steps {
                 script {
+                    sh "which kubectl"
                     sh 'cd k8s'
                     sh 'kubectl apply -f micro-boton.yaml'
                 }
