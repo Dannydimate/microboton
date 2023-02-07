@@ -40,7 +40,6 @@ pipeline {
         stage('Push Docker Image a kubernetes') {
             steps {
                 script {
-                    sh 'kubectl cluster-info'
                     sh 'kubectl version'
                 }
             }
