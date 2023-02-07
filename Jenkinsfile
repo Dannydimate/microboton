@@ -37,7 +37,7 @@ pipeline {
                 }
             }
         }
-        stage('List pods') {
+        stage('K8S Deploy') {
             steps {
                 script {
                     withKubeConfig([credentialsId: 'k8s']) {
