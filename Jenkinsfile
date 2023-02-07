@@ -40,7 +40,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    sh 'kubectl version --client --output=yaml'
+                    sh 'kubectl cluster-info
+                    sh 'kubectl version'
                 }
             }
         }
