@@ -37,7 +37,7 @@ pipeline {
             }
             }
         }
-        stage('Push Docker Image') {
+        stage('Push Docker Image a kubernetes') {
             steps {
                 script {
                     sh 'kubectl cluster-info'
