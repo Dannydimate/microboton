@@ -7,11 +7,11 @@ pipeline {
         stage('Build') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Dannydimate/microboton.git']])
-                script{
-                sh """
+                script {
+                    sh '''
                 gradle init
                 gradle build
-               """
+               '''
                 }
             }
         }
@@ -28,22 +28,23 @@ pipeline {
         }
         stage('Build,Push Docker Image') {
             steps {
-                script{
-                //sh 'gradle docker'
-                sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
-                sh 'docker build -t $DOCKER_USER/testdocker:1.0 .'
-                sh 'docker push $DOCKER_USER/testdocker:1.0'
-                echo 'image succesfull in dockerHub'
+                script {
+                    //sh 'gradle docker'
+                    sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
+                    sh 'docker build -t $DOCKER_USER/testdocker:1.0 .'
+                    sh 'docker push $DOCKER_USER/testdocker:1.0'
+                    echo 'image succesfull in dockerHub'
                 }
             }
         }
-        stage ('K8S Deploy') {
-          steps {
-            script {
-                withKubeConfig([credentialsId: 'k8s', serverUrl: '']) {
-                sh ('kubectl apply -f k8s/micro-boton.yaml')
+        stage('K8S Deploy') {
+            steps {
+                script {
+                    withKubeConfig([credentialsId: 'k8s', serverUrl: '']) {
+                        sh('kubectl apply -f k8s/micro-boton.yaml')
+                    }
                 }
-            }        
+            }
         }
     }
 }
