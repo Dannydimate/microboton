@@ -37,14 +37,13 @@ pipeline {
                 }
             }
         }
-        stage('Push Docker Image a kubernetes') {
-            steps {
-                script {
-                    sh 'cd k8s'
-                    sh 'kubectl apply -f micro-boton.yaml'
+        stage ('K8S Deploy') {
+          steps {
+            script {
+                withKubeConfig([credentialsId: 'k8s', serverUrl: '']) {
+                sh ('kubectl apply -f k8s/micro-boton.yaml')
                 }
-            }
+            }        
         }
     }
 }
-
