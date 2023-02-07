@@ -40,7 +40,7 @@ pipeline {
         stage('Push Docker Image a kubernetes') {
             steps {
                 script {
-                    sh 'kubectl version'
+                    sh 'kubectl version --client --output=yaml'
                 }
             }
         }
