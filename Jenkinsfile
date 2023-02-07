@@ -38,8 +38,10 @@ pipeline {
             }
         }
         stage('Push Docker Image') {
-            steps { 
-                sh 'kubectl version --client --output=yaml'
+            steps {
+                script {
+                    sh 'kubectl version --client --output=yaml'
+                }
             }
         }
     }
