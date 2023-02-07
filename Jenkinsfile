@@ -1,8 +1,8 @@
 pipeline {
     agent any
     tools {
-        gradle 'Gradle 7.5.1' 
-     }
+        gradle 'Gradle 7.5.1'
+    }
     stages {
         stage('Build') {
             steps {
@@ -12,7 +12,7 @@ pipeline {
                 gradle init
                 gradle build
                """
-            }
+                }
             }
         }
         stage('artifact file') {
@@ -34,7 +34,7 @@ pipeline {
                 sh 'docker build -t $DOCKER_USER/testdocker:1.0 .'
                 sh 'docker push $DOCKER_USER/testdocker:1.0'
                 echo 'image succesfull in dockerHub'
-            }
+                }
             }
         }
         stage('Push Docker Image a kubernetes') {
@@ -42,7 +42,6 @@ pipeline {
                 script
                     sh 'cd k8s'
                     sh 'kubectl apply -f micro-boton.yaml'
-                }
             }
         }
     }
