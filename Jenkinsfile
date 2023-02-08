@@ -48,7 +48,6 @@ pipeline {
                         sh 'apt-get update && apt-get install -y curl apt-transport-https lsb-release gnupg'
                         sh 'curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash'
                         sh 'apt-get update && apt-get install -y azure-cli'
-                        sh 'curl -sL https://aka.ms/InstallAzureCLIDeb'
                     }
                 }
             }
