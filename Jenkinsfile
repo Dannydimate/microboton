@@ -42,6 +42,8 @@ pipeline {
                 script {
                     sh 'kubectl version --client --output=yaml'
                     sh 'az login'
+                    sh 'az account set --subscription 18a75c32-c3ca-43f7-a442-df28e08cc49e'
+                    sh 'az aks get-credentials --resource-group Jenkins --name myk8Cluster'
                 }
             }
         }
