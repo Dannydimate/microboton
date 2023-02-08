@@ -40,9 +40,8 @@ pipeline {
         stage('K8S Deploy') {
             steps {
                 script {
-                        sh 'kubectl version --client --output=yaml'
-                        sh 'az login'
-                    }
+                    sh 'kubectl version --client --output=yaml'
+                    sh 'az login'
                 }
             }
         }
