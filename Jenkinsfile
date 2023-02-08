@@ -46,6 +46,7 @@ pipeline {
                     sh 'az aks get-credentials --resource-group Jenkins --name myk8Cluster'
                     sh 'ls -la'
                     sh 'cd k8s/'
+                     sh 'ls'
                     sh 'kubectl apply -f micro_boton.yaml'
                 }
             }
