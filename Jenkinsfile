@@ -30,9 +30,9 @@ pipeline {
             steps {
                 script {
                     //sh 'gradle docker'
-                    sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
-                    sh 'docker build -t $DOCKER_USER/testdocker:1.0 .'
-                    sh 'docker push $DOCKER_USER/testdocker:1.0'
+                    //sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
+                    //sh 'docker build -t $DOCKER_USER/testdocker:1.0 .'
+                    //sh 'docker push $DOCKER_USER/testdocker:1.0'
                     echo 'image succesfull in dockerHub'
                 }
             }
