@@ -20,10 +20,14 @@ pipeline {
                 sh 'echo "artifact file" > generatedFile.txt'
             }
         }
-        stage('test') {
+        stage('SonarQube analysis') {
             steps {
-                //sh 'gradle docker'
-                echo 'test succesfull'
+                withSonarQubeEnv('sonarServer') { 
+                    sh "./gradlew sonarqube \
+                        -Dsonar.projectKey=sonarqube \
+                        -Dsonar.host.url=http://20.122.244.162:9000 \
+                        -Dsonar.login=7d239dfffe49f65aa2d48f0c094422007aa48f65"
+                } 
             }
         }
         stage('Build,Push Docker Image') {
@@ -51,4 +55,5 @@ pipeline {
         }
     }
 }
+
 
