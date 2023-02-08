@@ -40,7 +40,6 @@ pipeline {
         stage('K8S Deploy') {
             steps {
                 script {
-                    withKubeConfig([credentialsId: 'k8s']) {
                         sh 'kubectl version --client --output=yaml'
                         sh 'az login'
                     }
