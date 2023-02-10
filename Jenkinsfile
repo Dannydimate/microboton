@@ -24,9 +24,9 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonarServer') { 
                     sh "./gradlew sonarqube \
-                        -Dsonar.projectKey=sonarqube \
-                        -Dsonar.host.url=http://20.122.244.162:9000 \
-                        -Dsonar.login=7d239dfffe49f65aa2d48f0c094422007aa48f65"
+                        -Dsonar.projectKey=sonar \
+                        -Dsonar.host.url=http://20.10.89.88:9000 \
+                        -Dsonar.login=0a242169983d08002479eac19a221497bb836d5e"
                 } 
             }
         }
@@ -46,8 +46,8 @@ pipeline {
                 script {
                     sh 'kubectl version --client --output=yaml'
                     sh 'az login'
-                    sh 'az account set --subscription 18a75c32-c3ca-43f7-a442-df28e08cc49e'
-                    sh 'az aks get-credentials --resource-group Jenkins --name myk8Cluster'
+                    sh 'az account set --subscription c56d0694-4b57-4929-a446-af58bf9b4393'
+                    sh 'az aks get-credentials --resource-group semillero-devops --name aks1'
                     sh 'ls'
                     sh 'kubectl apply -f k8s/micro_boton.yaml'
                 }
@@ -55,5 +55,3 @@ pipeline {
         }
     }
 }
-
-
