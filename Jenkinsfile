@@ -27,6 +27,7 @@ pipeline {
                         -Dsonar.projectKey=sonar \
                         -Dsonar.host.url=http://20.22.24.28:9000 \
                         -Dsonar.login=7b52bc062543157d5c10f3fb8b415249dc1dc05d"
+                    echo 'test sonar succesfull'
                 } 
             }
         }
