@@ -34,7 +34,7 @@ pipeline {
         stage('Build,Push Docker Image') {
             steps {
                 script {
-                    //sh 'gradle docker'
+                    //sh 'docker version'
                     //sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
                     //sh 'docker build -t $DOCKER_USER/micro-boton:1.0'
                     //sh 'docker push $DOCKER_USER/micro-boton:1.0'
