@@ -20,7 +20,7 @@ pipeline {
                 sh 'echo "artifact file" > generatedFile.txt'
             }
         }
-        stage('SonarQube analysis') {
+        stage('Sonar analysis') {
             steps {
                 withSonarQubeEnv('sonarServer') { 
                     sh "./gradlew sonarqube \
