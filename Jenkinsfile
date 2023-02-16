@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent {label "slave"}
     tools {
         gradle 'Gradle 7.5.1'
     }
@@ -34,10 +34,10 @@ pipeline {
         stage('Build,Push Docker Image') {
             steps {
                 script {
-                    //sh 'docker version'
-                    //sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
-                    //sh 'docker build -t $DOCKER_USER/micro-boton:1.0'
-                    //sh 'docker push $DOCKER_USER/micro-boton:1.0'
+                    sh 'docker version'
+                    sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
+                    sh 'docker build -t $DOCKER_USER/micro-boton:1.0'
+                    sh 'docker push $DOCKER_USER/micro-boton:1.0'
                     echo 'image succesfull in dockerHub'
                 }
             }
