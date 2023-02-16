@@ -10,7 +10,6 @@ pipeline {
                 script {
                     sh '''
                 gradle init
-                gradle build
                '''
                 }
             }
@@ -20,7 +19,7 @@ pipeline {
                 sh 'echo "artifact file" > generatedFile.txt'
             }
         }
-        stage('Sonar analysis') {
+        stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('sonarServer') { 
                     sh "./gradlew sonarqube \
@@ -32,12 +31,15 @@ pipeline {
             }
         }
         stage('Build,Push Docker Image') {
+            agent {
+               label "slave"
+            } 
             steps {
                 script {
                     sh 'docker version'
                     sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
-                    sh 'docker build -t $DOCKER_USER/micro-boton:1.0'
-                    sh 'docker push $DOCKER_USER/micro-boton:1.0'
+                    sh 'docker build -t $DOCKER_USER/micro-boton:3.0 .'
+                    sh 'docker push $DOCKER_USER/micro-boton:3.0'
                     echo 'image succesfull in dockerHub'
                 }
             }
