@@ -6,10 +6,10 @@ metadata:
 spec:
   tls:
   - hosts:
-      - microsd.com
+      - microsdanny.com
     secretName: my-micros-certs      
   rules:   
-    - host: microsd.com
+    - host: microsdanny.com
       http:   
         paths:   
           - path: /rest 
