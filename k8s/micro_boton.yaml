@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: micro-boton
-          image: danny44/micro-boton:1.0
+          image: danny44/micro-boton:3.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
