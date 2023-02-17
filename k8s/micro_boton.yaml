@@ -29,7 +29,7 @@ spec:
   ports:
     - protocol: "TCP"
       port: 8081        # The port inside the cluster
-      targetPort: 8081  # The port exposed by the service
+      targetPort: 8080  # The port exposed by the service
   type: ClusterIP       # Type of service
   selector:
     app: micro-boton
